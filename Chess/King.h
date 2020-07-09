@@ -9,6 +9,8 @@ public:
 	King(int, int, int, char);
 	~King();
 
+	std::vector<sf::Vector2i> getPossibleMoves(int, int, Piece* [][8]) override;
+
 private:
 
 };
