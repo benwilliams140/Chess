@@ -1,13 +1,13 @@
 #include "Piece.h"
 
-Piece::Piece(std::string _file, int _size, int _col, int _row) : move(0), selected(false)
+Piece::Piece(std::string _file, int _size, int _col, int _row) : move(0), selected(false), size(_size), col(_col), row(_row)
 {
 	if (!tex.loadFromFile(_file))
 		std::cout << "Error loading file: " << _file << std::endl;
 
-	rect.setSize(sf::Vector2f(_size, _size));
-	rect.setOrigin(sf::Vector2f(_size / 2, _size / 2));
-	rect.setPosition(sf::Vector2f(_col * _size + _size / 2, _row * _size + _size / 2));
+	rect.setSize(sf::Vector2f(size, size));
+	rect.setOrigin(sf::Vector2f(size / 2, size / 2));
+	rect.setPosition(sf::Vector2f(col * size + size / 2, row * size + size / 2));
 	rect.setTexture(&tex);
 	rect.setOutlineColor(sf::Color::Green);
 }
@@ -34,4 +34,36 @@ void Piece::reset()
 	selected = false;
 	rect.setScale(sf::Vector2f(1, 1));
 	rect.setOutlineThickness(0);
+}
+
+void Piece::moveTo(int _col, int _row)
+{
+	//std::cout << "Before: " << rect.getPosition().x << ", " << rect.getPosition().y << std::endl;
+
+	
+	//rect.setPosition(sf::Vector2f(col * size + size / 2, row * size + size / 2));
+	rect.move(sf::Vector2f((_col - col) * size, (_row - row) * size));
+	
+	col = _col;
+	row = _row;
+	
+	++move;
+
+	//std::cout << "After: " << rect.getPosition().x << ", " << rect.getPosition().y << std::endl;
+}
+
+std::vector<sf::Vector2i> Piece::getPossibleMoves(int _rows, int _cols, Piece* _board[][8])
+{
+	std::vector<sf::Vector2i> _moves;
+	return _moves;
+}
+
+int Piece::getRow()
+{
+	return row;
+}
+
+int Piece::getCol()
+{
+	return col;
 }

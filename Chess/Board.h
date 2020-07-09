@@ -33,8 +33,11 @@ public:
 
 private:
 	void resetBoard();
+	void checkPossibleMoves(int, int);
 
 	Piece* board[COLS][ROWS];
+	Piece* selectedPiece;
+	std::vector<sf::Vector2i> possibleMoves;
 };
 
 #endif

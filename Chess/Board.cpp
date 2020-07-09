@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board() : selectedPiece(NULL)
 {
 	init();
 }
@@ -55,6 +55,7 @@ void Board::update()
 
 void Board::render(Window* _window)
 {
+	// renders the board
 	for (int _row = 0; _row < ROWS; ++_row)
 	{
 		for (int _col = 0; _col < COLS; ++_col)
@@ -68,7 +69,32 @@ void Board::render(Window* _window)
 			else _rect.setFillColor(sf::Color(192, 192, 192));
 
 			_window->render(_rect);
+		}
+	}
 
+	// renders the possible moves (if any)
+	for (auto _it = possibleMoves.begin(); _it != possibleMoves.end(); ++_it)
+	{
+		sf::Vector2i _move = *_it;
+		sf::RectangleShape _rect(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+		
+		_rect.setOrigin(sf::Vector2f(TILE_SIZE / 2, TILE_SIZE / 2));
+		_rect.setPosition(sf::Vector2f(_move.x * TILE_SIZE + TILE_SIZE / 2, _move.y * TILE_SIZE + TILE_SIZE / 2));
+		_rect.setScale(sf::Vector2f(0.96, 0.96));
+		_rect.setOutlineColor(sf::Color::Yellow);
+		_rect.setOutlineThickness(3);
+
+		if ((_move.x + _move.y) % 2 == 0) _rect.setFillColor(sf::Color::White);
+		else _rect.setFillColor(sf::Color(192, 192, 192));
+
+		_window->render(_rect);
+	}
+
+	// renders the pieces
+	for (int _row = 0; _row < ROWS; ++_row)
+	{
+		for (int _col = 0; _col < COLS; ++_col)
+		{
 			if (board[_col][_row]) board[_col][_row]->render(_window);
 		}
 	}
@@ -83,7 +109,32 @@ void Board::mouseClicked(sf::Vector2i _position)
 
 	//std::cout << _col << ", " << _row << std::endl;
 
-	if(board[_col][_row]) board[_col][_row]->mouseClicked();
+	//selectedPiece = board[_col][_row];
+
+	if (board[_col][_row])
+	{
+		selectedPiece = board[_col][_row];
+		selectedPiece->mouseClicked();
+		possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS, board);
+	}
+	else checkPossibleMoves(_col, _row);
+}
+
+void Board::checkPossibleMoves(int _col, int _row)
+{
+	for (auto _it = possibleMoves.begin(); _it != possibleMoves.end(); ++_it)
+	{
+		sf::Vector2i _move = *_it;
+		if (_move.x == _col && _move.y == _row)
+		{
+			board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;
+			selectedPiece->moveTo(_col, _row);
+			board[_col][_row] = selectedPiece;
+		}
+	}
+
+	selectedPiece = NULL;
+	possibleMoves.clear();
 }
 
 void Board::resetBoard()
