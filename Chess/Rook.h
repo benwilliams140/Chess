@@ -9,6 +9,8 @@ public:
 	Rook(int, int, int, char);
 	~Rook();
 
+	std::vector<sf::Vector2i> getPossibleMoves(int, int, Piece* [][8]) override;
+
 private:
 
 };
