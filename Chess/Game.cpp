@@ -76,9 +76,13 @@ void Game::initGUI()
 	tgui::Widget::Ptr _widget;
 	
 	_widget = gui->getWidgetByName("btnRestart");
-	_widget->connect(tgui::Signals::Button::Pressed, [&]()
-		{
-			//std::cout << "Resetting" << std::endl;
-			board->init();
-		});
+	if (_widget)
+	{
+		_widget->connect(tgui::Signals::Button::Pressed, [&]()
+			{
+				//std::cout << "Resetting" << std::endl;
+				board->init();
+			});
+	}
+	else std::cout << "Error connecting btnRestart" << std::endl;
 }

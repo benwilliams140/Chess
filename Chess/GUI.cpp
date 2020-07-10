@@ -34,13 +34,17 @@ void GUI::init()
 
 tgui::Widget::Ptr GUI::getWidgetByName(std::string _name)
 {
-	/*std::vector<tgui::Widget::Ptr> _widgets = gui.getWidgets();
+	std::vector<tgui::Widget::Ptr> _widgets = panel->getWidgets();
+	tgui::Widget::Ptr _widget;
 
 	for (auto _it = _widgets.begin(); _it != _widgets.end(); ++_it)
 	{
-		tgui::Widget::Ptr _widget = *_it;
-		if (std::string(_widget->getWidgetName()) == _name) return _widget;
-	}*/
+		_widget = *_it;
+		
+		//std::cout << std::string(_widget->getWidgetName()) << " : " << _name << std::endl;
 
-	return btnRestart;
+		if (std::string(_widget->getWidgetName()) == _name) return _widget;
+	}
+
+	return NULL;
 }
