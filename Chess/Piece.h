@@ -18,7 +18,7 @@ public:
 	void reset();
 	void moveTo(int, int);
 
-	virtual std::vector<sf::Vector2i> getPossibleMoves(int, int, Piece*[][8]);
+	virtual std::vector<sf::Vector2i> getPossibleMoves(int, int);
 
 	int getRow();
 	int getCol();

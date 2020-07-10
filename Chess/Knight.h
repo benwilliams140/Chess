@@ -9,6 +9,8 @@ public:
 	Knight(int, int, int, char);
 	~Knight();
 
+	std::vector<sf::Vector2i> getPossibleMoves(int, int) override;
+
 private:
 
 };

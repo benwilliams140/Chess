@@ -11,7 +11,7 @@ King::~King()
 
 }
 
-std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols, Piece* _board[][8])
+std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols)
 {
 	std::vector<sf::Vector2i> _moves;
 

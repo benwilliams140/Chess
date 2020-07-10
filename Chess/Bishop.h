@@ -9,6 +9,8 @@ public:
 	Bishop(int, int, int, char);
 	~Bishop();
 
+	std::vector<sf::Vector2i> getPossibleMoves(int, int) override;
+
 private:
 
 };

@@ -12,7 +12,7 @@ public:
 	Pawn(int, int, int, char);
 	~Pawn();
 
-	std::vector<sf::Vector2i> getPossibleMoves(int, int, Piece*[][8]) override;
+	std::vector<sf::Vector2i> getPossibleMoves(int, int) override;
 
 private:
 	int dir;

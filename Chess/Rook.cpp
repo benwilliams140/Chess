@@ -11,7 +11,7 @@ Rook::~Rook()
 
 }
 
-std::vector<sf::Vector2i> Rook::getPossibleMoves(int _rows, int _cols, Piece* [][8])
+std::vector<sf::Vector2i> Rook::getPossibleMoves(int _rows, int _cols)
 {
 	std::vector<sf::Vector2i> _moves;
 

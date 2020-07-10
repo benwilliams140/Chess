@@ -10,3 +10,9 @@ Bishop::~Bishop()
 {
 
 }
+
+std::vector<sf::Vector2i> Bishop::getPossibleMoves(int _rows, int _cols)
+{
+	std::vector<sf::Vector2i> _moves;
+	return _moves;
+}

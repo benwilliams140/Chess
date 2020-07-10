@@ -12,6 +12,7 @@ Board::~Board()
 
 void Board::init()
 {
+	// initializes board to NULL
 	for (int _row = 0; _row < ROWS; ++_row)
 	{
 		for (int _col = 0; _col < COLS; ++_col)
@@ -20,30 +21,36 @@ void Board::init()
 		}
 	}
 
+	// initializes black/white pawns
 	for (int _col = 0; _col < COLS; ++_col)
 	{
 		board[_col][1] = new Pawn(TILE_SIZE, _col, 1, 'b');
 		board[_col][6] = new Pawn(TILE_SIZE, _col, 6, 'w');
 	}
 
+	// initializes black/white rooks
 	board[0][0] = new Rook(TILE_SIZE, 0, 0, 'b');
 	board[7][0] = new Rook(TILE_SIZE, 7, 0, 'b');
 	board[0][7] = new Rook(TILE_SIZE, 0, 7, 'w');
 	board[7][7] = new Rook(TILE_SIZE, 7, 7, 'w');
 
+	// initializes black/white knights
 	board[1][0] = new Knight(TILE_SIZE, 1, 0, 'b');
 	board[6][0] = new Knight(TILE_SIZE, 6, 0, 'b');
 	board[1][7] = new Knight(TILE_SIZE, 1, 7, 'w');
 	board[6][7] = new Knight(TILE_SIZE, 6, 7, 'w');
 
+	// initializes black/white bishops
 	board[2][0] = new Bishop(TILE_SIZE, 2, 0, 'b');
 	board[5][0] = new Bishop(TILE_SIZE, 5, 0, 'b');
 	board[2][7] = new Bishop(TILE_SIZE, 2, 7, 'w');
 	board[5][7] = new Bishop(TILE_SIZE, 5, 7, 'w');
 
+	// initializes black/white queen
 	board[3][0] = new Queen(TILE_SIZE, 3, 0, 'b');
 	board[3][7] = new Queen(TILE_SIZE, 3, 7, 'w');
 
+	// initializes black/white king
 	board[4][0] = new King(TILE_SIZE, 4, 0, 'b');
 	board[4][7] = new King(TILE_SIZE, 4, 7, 'w');
 }
@@ -55,7 +62,7 @@ void Board::update()
 
 void Board::render(Window* _window)
 {
-	// renders the board
+	// renders the checkered board
 	for (int _row = 0; _row < ROWS; ++_row)
 	{
 		for (int _col = 0; _col < COLS; ++_col)
@@ -65,6 +72,7 @@ void Board::render(Window* _window)
 			_rect.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
 			_rect.setPosition(sf::Vector2f(_col * TILE_SIZE, _row * TILE_SIZE));
 			
+			// decides if a square should be white or gray
 			if ((_row + _col) % 2 == 0) _rect.setFillColor(sf::Color::White);
 			else _rect.setFillColor(sf::Color(192, 192, 192));
 
@@ -115,7 +123,7 @@ void Board::mouseClicked(sf::Vector2i _position)
 	{
 		selectedPiece = board[_col][_row];
 		selectedPiece->mouseClicked();
-		possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS, board);
+		possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS);
 	}
 	else checkPossibleMoves(_col, _row);
 }
@@ -145,6 +153,7 @@ void Board::checkPossibleMoves(int _col, int _row)
 
 void Board::resetBoard()
 {
+	// resets each of the piece's selected values every time the mouse is clicked
 	for (int _row = 0; _row < ROWS; ++_row)
 	{
 		for (int _col = 0; _col < COLS; ++_col)

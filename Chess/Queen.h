@@ -9,6 +9,8 @@ public:
 	Queen(int, int, int, char);
 	~Queen();
 
+	std::vector<sf::Vector2i> getPossibleMoves(int, int) override;
+
 private:
 
 };
