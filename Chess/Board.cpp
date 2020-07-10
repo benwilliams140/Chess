@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board() : selectedPiece(NULL)
+Board::Board() : selectedPiece(NULL), curPlayer(PLAYER_ONE)
 {
 	init();
 }
@@ -121,9 +121,12 @@ void Board::mouseClicked(sf::Vector2i _position)
 
 	if (board[_col][_row] && possibleMoves.size() == 0)
 	{
-		selectedPiece = board[_col][_row];
-		selectedPiece->mouseClicked();
-		possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS);
+		if (board[_col][_row]->getColour() == curPlayer)
+		{
+			selectedPiece = board[_col][_row];
+			selectedPiece->mouseClicked();
+			possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS);
+		}
 	}
 	else checkPossibleMoves(_col, _row);
 }
@@ -143,6 +146,9 @@ void Board::checkPossibleMoves(int _col, int _row)
 			board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;
 			selectedPiece->moveTo(_col, _row);
 			board[_col][_row] = selectedPiece;
+
+			curPlayer = curPlayer == PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+
 			break;
 		}
 	}

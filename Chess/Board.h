@@ -12,6 +12,9 @@
 #include "Queen.h"
 #include "King.h"
 
+#define PLAYER_ONE	'w'
+#define PLAYER_TWO	'b'
+
 const unsigned int COLS = 8;
 const unsigned int ROWS = 8;
 const unsigned int TILE_SIZE = 100;
@@ -38,6 +41,8 @@ private:
 	Piece* board[COLS][ROWS];
 	Piece* selectedPiece;
 	std::vector<sf::Vector2i> possibleMoves;
+
+	char curPlayer;
 };
 
 #endif
