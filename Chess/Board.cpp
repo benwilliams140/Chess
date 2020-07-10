@@ -111,7 +111,7 @@ void Board::mouseClicked(sf::Vector2i _position)
 
 	//selectedPiece = board[_col][_row];
 
-	if (board[_col][_row])
+	if (board[_col][_row] && possibleMoves.size() == 0)
 	{
 		selectedPiece = board[_col][_row];
 		selectedPiece->mouseClicked();
@@ -127,9 +127,15 @@ void Board::checkPossibleMoves(int _col, int _row)
 		sf::Vector2i _move = *_it;
 		if (_move.x == _col && _move.y == _row)
 		{
+			if (board[_move.x][_move.y])
+			{
+				if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) break;
+			}
+
 			board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;
 			selectedPiece->moveTo(_col, _row);
 			board[_col][_row] = selectedPiece;
+			break;
 		}
 	}
 

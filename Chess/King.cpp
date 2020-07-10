@@ -1,7 +1,7 @@
 #include "King.h"
 
 King::King(int _size, int _col, int _row, char _colour)
-	: Piece(_colour == 'w' ? "./assets/white_king.png" : "./assets/black_king.png", _size, _col, _row)
+	: Piece(_colour == 'w' ? "./assets/white_king.png" : "./assets/black_king.png", _size, _col, _row, _colour)
 {
 
 }
@@ -11,7 +11,7 @@ King::~King()
 
 }
 
-std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols, Piece* [][8])
+std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols, Piece* _board[][8])
 {
 	std::vector<sf::Vector2i> _moves;
 
@@ -22,14 +22,11 @@ std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols, Piece* []
 			int _nextCol = col + _dCol;
 			int _nextRow = row + _dRow;
 
-			if (_nextCol >= 0 && _nextCol < _cols)
+			if (_nextCol >= 0 && _nextCol < _cols && _nextRow >= 0 && _nextRow < _rows)
 			{
-				if (_nextRow >= 0 && _nextRow < _rows)
+				if (_nextRow != row || _nextCol != col)
 				{
-					if (_nextRow != row || _nextCol != col)
-					{
-						_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
-					}
+					_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
 				}
 			}
 		}

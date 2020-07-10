@@ -1,6 +1,6 @@
 #include "Piece.h"
 
-Piece::Piece(std::string _file, int _size, int _col, int _row) : move(0), selected(false), size(_size), col(_col), row(_row)
+Piece::Piece(std::string _file, int _size, int _col, int _row, char _colour) : move(0), selected(false), size(_size), col(_col), row(_row), colour(_colour)
 {
 	if (!tex.loadFromFile(_file))
 		std::cout << "Error loading file: " << _file << std::endl;
@@ -66,4 +66,9 @@ int Piece::getRow()
 int Piece::getCol()
 {
 	return col;
+}
+
+char Piece::getColour()
+{
+	return colour;
 }
