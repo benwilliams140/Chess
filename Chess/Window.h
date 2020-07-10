@@ -18,9 +18,12 @@ public:
 	sf::Vector2i getMousePosition();
 
 	sf::RenderWindow& getWindow();
+	int getWidth();
+	int getHeight();
 
 private:
 	sf::RenderWindow window;
+	int width, height;
 };
 
 #endif

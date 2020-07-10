@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board() : selectedPiece(NULL), curPlayer(PLAYER_ONE)
+Board::Board() : selectedPiece(NULL)
 {
 	init();
 }
@@ -17,6 +17,7 @@ void Board::init()
 	{
 		for (int _col = 0; _col < COLS; ++_col)
 		{
+			if (board[_col][_row]) delete board[_col][_row];
 			board[_col][_row] = NULL;
 		}
 	}
@@ -53,6 +54,8 @@ void Board::init()
 	// initializes black/white king
 	board[4][0] = new King(TILE_SIZE, 4, 0, 'b');
 	board[4][7] = new King(TILE_SIZE, 4, 7, 'w');
+
+	curPlayer = PLAYER_ONE;
 }
 
 void Board::update()
@@ -114,6 +117,8 @@ void Board::mouseClicked(sf::Vector2i _position)
 
 	int _row = (int)floor(_position.y / TILE_SIZE);
 	int _col = (int)floor(_position.x / TILE_SIZE);
+
+	if (_col >= COLS) return;
 
 	//std::cout << _col << ", " << _row << std::endl;
 

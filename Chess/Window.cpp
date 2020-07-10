@@ -1,8 +1,8 @@
 #include "Window.h"
 
-Window::Window(std::string _title, int _width, int _height)
+Window::Window(std::string _title, int _width, int _height) : width(_width), height(_height)
 {
-	sf::VideoMode _vm(_width, _height);
+	sf::VideoMode _vm(width, height);
 	window.create(_vm, sf::String(_title), sf::Style::Default);
 }
 
@@ -44,4 +44,14 @@ sf::Vector2i Window::getMousePosition()
 sf::RenderWindow& Window::getWindow()
 {
 	return window;
+}
+
+int Window::getWidth()
+{
+	return width;
+}
+
+int Window::getHeight()
+{
+	return height;
 }

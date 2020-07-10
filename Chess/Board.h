@@ -29,13 +29,13 @@ public:
 	void update();
 	void render(Window*);
 	void mouseClicked(sf::Vector2i);
+	void resetBoard();
 
 	int getCols();
 	int getRows();
 	int getTileSize();
 
 private:
-	void resetBoard();
 	void checkPossibleMoves(int, int);
 
 	Piece* board[COLS][ROWS];

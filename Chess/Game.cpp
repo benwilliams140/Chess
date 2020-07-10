@@ -4,10 +4,11 @@ Game::Game() : running(false)
 {
 	board = new Board();
 
-	int _width = board->getCols() * board->getTileSize();
+	int _width = board->getCols() * board->getTileSize() + GUI_WIDTH;
 	int _height = board->getRows() * board->getTileSize();
 
 	window = new Window(TITLE, _width, _height);
+	gui = new GUI(window, GUI_WIDTH, _height);
 }
 
 void Game::start()
@@ -31,6 +32,8 @@ void Game::gameloop()
 	sf::Clock _clock;
 	window->setFrameLimit(60);
 
+	initGUI();
+
 	while (running)
 	{
 		getInput();
@@ -48,6 +51,8 @@ void Game::getInput()
 		if (_event.type == sf::Event::Closed) stop();
 
 		if (_event.type == sf::Event::MouseButtonPressed) board->mouseClicked(window->getMousePosition());
+
+		gui->handleEvent(_event);
 	}
 }
 
@@ -61,6 +66,19 @@ void Game::render()
 	window->clear();
 
 	board->render(window);
+	gui->render();
 
 	window->display();
+}
+
+void Game::initGUI()
+{
+	tgui::Widget::Ptr _widget;
+	
+	_widget = gui->getWidgetByName("btnRestart");
+	_widget->connect(tgui::Signals::Button::Pressed, [&]()
+		{
+			//std::cout << "Resetting" << std::endl;
+			board->init();
+		});
 }
