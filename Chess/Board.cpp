@@ -146,6 +146,18 @@ void Board::checkPossibleMoves(int _col, int _row)
 			if (board[_move.x][_move.y])
 			{
 				if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) break;
+				else
+				{
+					char _piece = board[_col][_row]->getPiece();
+					
+					if (_piece == 'K')
+					{
+						init();
+						break;
+					}
+
+					delete board[_col][_row];
+				}
 			}
 
 			board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;

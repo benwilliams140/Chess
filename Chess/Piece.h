@@ -10,7 +10,7 @@
 class Piece
 {
 public:
-	Piece(std::string, int, int, int, char);
+	Piece(std::string, int, int, int, char, char);
 	~Piece();
 
 	void render(Window*);
@@ -23,6 +23,7 @@ public:
 	int getRow();
 	int getCol();
 	char getColour();
+	char getPiece();
 
 protected:
 	int row, col, size;
@@ -30,6 +31,8 @@ protected:
 
 private:
 	char colour;
+	char piece;
+
 	std::string file;
 	sf::RectangleShape rect;
 	sf::Texture tex;
