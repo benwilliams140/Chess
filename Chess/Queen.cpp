@@ -14,5 +14,8 @@ Queen::~Queen()
 std::vector<sf::Vector2i> Queen::getPossibleMoves(int _rows, int _cols)
 {
 	std::vector<sf::Vector2i> _moves;
+
+	
+
 	return _moves;
 }
