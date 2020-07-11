@@ -85,4 +85,14 @@ void Game::initGUI()
 			});
 	}
 	else std::cout << "Error connecting btnRestart" << std::endl;
+
+	_widget = gui->getWidgetByName("chkTakeTurns");
+	if (_widget)
+	{
+		_widget->connect(tgui::Signals::CheckBox::Changed, [&]()
+			{
+				board->switchTakeTurns();
+			});
+	}
+	else std::cout << "Error connecting chkTakeTurns" << std::endl;
 }

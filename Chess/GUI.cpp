@@ -30,6 +30,11 @@ void GUI::init()
 	btnRestart = tgui::Button::create("Restart");
 	btnRestart->setPosition(10, 10);
 	panel->add(btnRestart, "btnRestart");
+
+	chkTakeTurns = tgui::CheckBox::create("Take Turns");
+	chkTakeTurns->setPosition(10, btnRestart->getPosition().y + btnRestart->getSize().y + 5);
+	chkTakeTurns->setChecked(true);
+	panel->add(chkTakeTurns, "chkTakeTurns");
 }
 
 tgui::Widget::Ptr GUI::getWidgetByName(std::string _name)

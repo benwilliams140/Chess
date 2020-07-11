@@ -25,6 +25,7 @@ private:
 	tgui::Gui gui;
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr btnRestart;
+	tgui::CheckBox::Ptr chkTakeTurns;
 
 	int width, height;
 };

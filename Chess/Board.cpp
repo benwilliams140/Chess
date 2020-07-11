@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board() : selectedPiece(NULL)
+Board::Board() : selectedPiece(NULL), takeTurns(true)
 {
 	init();
 }
@@ -126,7 +126,7 @@ void Board::mouseClicked(sf::Vector2i _position)
 
 	if (board[_col][_row] && possibleMoves.size() == 0)
 	{
-		if (board[_col][_row]->getColour() == curPlayer)
+		if (!takeTurns || board[_col][_row]->getColour() == curPlayer)
 		{
 			selectedPiece = board[_col][_row];
 			selectedPiece->mouseClicked();
@@ -199,4 +199,9 @@ int Board::getRows()
 int Board::getTileSize()
 {
 	return TILE_SIZE;
+}
+
+void Board::switchTakeTurns()
+{
+	takeTurns = !takeTurns;
 }

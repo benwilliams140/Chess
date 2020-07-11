@@ -35,6 +35,8 @@ public:
 	int getRows();
 	int getTileSize();
 
+	void switchTakeTurns();
+
 private:
 	void checkPossibleMoves(int, int);
 
@@ -43,6 +45,7 @@ private:
 	std::vector<sf::Vector2i> possibleMoves;
 
 	char curPlayer;
+	bool takeTurns;
 };
 
 #endif
