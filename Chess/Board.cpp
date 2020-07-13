@@ -242,9 +242,10 @@ void Board::filterPossibleMoves(int _col, int _row)
 				if (_move.x >= _upperDiagonalUpColBound && _move.y <= _lowerDiagonalRightRowBound && _upperDiagonalUpColBound != -1 && _lowerDiagonalRightRowBound != -1) return true;
 				if (_move.x >= _upperDiagonalDownColBound && _move.y >= _upperDiagonalRightRowBound && _upperDiagonalDownColBound != -1 && _upperDiagonalRightRowBound != -1) return true;
 
-				if (board[_move.x][_move.y])
+				if (_move.x >= 0 && _move.x < COLS && _move.y >= 0 && _move.y < ROWS)
 				{
-					if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) return true;
+					if (board[_move.x][_move.y])
+						if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) return true;
 				}
 
 				return false;

@@ -14,7 +14,15 @@ Pawn::~Pawn()
 std::vector<sf::Vector2i> Pawn::getPossibleMoves(Array2D<Piece*>& _board)
 {
 	std::vector<sf::Vector2i> _moves;
-	_moves.push_back(sf::Vector2i(col, row + dir));
+
+	if (row + dir >= 0 && row + dir < _board.getRows())
+	{
+		if(!_board[col][row + dir]) _moves.push_back(sf::Vector2i(col, row + dir));
+		if (col - 1 >= 0)
+			if (_board[col - 1][row + dir]) _moves.push_back(sf::Vector2i(col - 1, row + dir));
+		if (col + 1 < _board.getCols())
+			if (_board[col + 1][row + dir]) _moves.push_back(sf::Vector2i(col + 1, row + dir));
+	}
 
 	if (move == 0) _moves.push_back(sf::Vector2i(col, row + 2 * dir));
 
