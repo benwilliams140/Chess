@@ -158,6 +158,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array2D.h" />
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Game.h" />

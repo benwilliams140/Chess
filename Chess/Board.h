@@ -11,6 +11,7 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
+#include "Array2D.h"
 
 #define PLAYER_ONE	'w'
 #define PLAYER_TWO	'b'
@@ -41,7 +42,7 @@ private:
 	void checkPossibleMoves(int, int);
 	void filterPossibleMoves(int, int);
 
-	Piece* board[COLS][ROWS];
+	Array2D<Piece*> board = Array2D<Piece*>(COLS, ROWS);
 	Piece* selectedPiece;
 	std::vector<sf::Vector2i> possibleMoves;
 
