@@ -1,5 +1,11 @@
 #include "Game.h"
 
+/*
+TODO:
+- Fischer Random Chess??
+- Add 2DArray class to handle custom board operations
+*/
+
 Game::Game() : running(false)
 {
 	board = new Board();

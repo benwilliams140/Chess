@@ -39,6 +39,7 @@ public:
 
 private:
 	void checkPossibleMoves(int, int);
+	void filterPossibleMoves(int, int);
 
 	Piece* board[COLS][ROWS];
 	Piece* selectedPiece;
