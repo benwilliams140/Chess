@@ -180,11 +180,10 @@ void Board::filterPossibleMoves(int _col, int _row)
 	int _multipleBound = _col > _row ? _col : _row;
 	int _lowerRowBound = -1, _upperRowBound = -1;
 	int _lowerColBound = -1, _upperColBound = -1;
-	int _lowerColLowerRowBound = -1, _upperColUpperRowBound = -1;
-	int _lowerColUpperRowBound = -1, _upperColLowerRowBound = -1;
-
-	
-
+	int _lowerDiagonalLeftRowBound = -1, _lowerDiagonalRightRowBound = -1;
+	int _upperDiagonalLeftRowBound = -1, _upperDiagonalRightRowBound = -1;
+	int _lowerDiagonalUpColBound = -1, _lowerDiagonalDownColBound = -1;
+	int _upperDiagonalUpColBound = -1, _upperDiagonalDownColBound = -1;
 	
 	for (int _multiple = 1; _multiple < 8; ++_multiple)
 	{
@@ -207,32 +206,34 @@ void Board::filterPossibleMoves(int _col, int _row)
 
 						// row bounds
 						if (_nextCol == _col && _nextRow < _row && _lowerRowBound == -1) _lowerRowBound = _nextRow - 1;
-						if (_nextCol == _col && _nextRow > _row&& _upperRowBound == -1) _upperRowBound = _nextRow + 1;
+						if (_nextCol == _col && _nextRow > _row && _upperRowBound == -1) _upperRowBound = _nextRow + 1;
 						
-						/*if (_nextCol < _col && _nextRow < _row && _lowerColLowerRowBound == -1) _lowerColLowerRowBound = _nextCol;
-						if (_nextCol < _col && _nextRow > _row && _lowerColUpperRowBound == -1) _lowerColUpperRowBound = _nextCol;
-						if (_nextCol > _col&& _nextRow < _row && _upperColLowerRowBound == -1) _upperColLowerRowBound = _nextCol;
-						if (_nextCol > _col&& _nextRow > _row && _upperColUpperRowBound == -1) _upperColUpperRowBound = _nextCol;
-						if (_nextCol < _col && _nextRow == _row && _lowerColBound == -1) _lowerColBound = _nextCol;
-						if (_nextCol > _col&& _nextRow == _row && _upperColBound == -1) _upperColBound = _nextCol;
-						if (_nextCol == _col && _nextRow < _row && _lowerRowBound == -1) _lowerRowBound = _nextRow;
-						if (_nextCol == _col && _nextRow > _row && _upperRowBound == -1) _upperRowBound = _nextRow;*/
+						// diagonal bounds
+						if (_nextCol < _col && _nextRow < _row && _lowerDiagonalUpColBound == -1 && _lowerDiagonalLeftRowBound == -1)
+						{
+							_lowerDiagonalUpColBound = _nextCol - 1;
+							_lowerDiagonalLeftRowBound = _nextRow - 1;
+						}
+						if (_nextCol < _col && _nextRow > _row&& _lowerDiagonalDownColBound == -1 && _upperDiagonalLeftRowBound == -1)
+						{
+							_lowerDiagonalDownColBound = _nextCol - 1;
+							_upperDiagonalLeftRowBound = _nextRow + 1;
+						}
+						if (_nextCol > _col && _nextRow < _row && _upperDiagonalUpColBound == -1 && _lowerDiagonalRightRowBound == -1)
+						{
+							_upperDiagonalUpColBound = _nextCol + 1;
+							_lowerDiagonalRightRowBound = _nextRow - 1;
+						}
+						if (_nextCol > _col&& _nextRow > _row&& _upperDiagonalDownColBound == -1 && _upperDiagonalRightRowBound == -1)
+						{
+							_upperDiagonalDownColBound = _nextCol + 1;
+							_upperDiagonalRightRowBound = _nextRow + 1;
+						}
 					}
 				}
 			}
 		}
 	}
-
-	/*
-	std::cout << "Lower Col Bound: " << _lowerColBound << std::endl;
-	std::cout << "Upper Col Bound: " << _upperColBound << std::endl;
-	std::cout << "Lower Row Bound: " << _lowerRowBound << std::endl;
-	std::cout << "Upper Row Bound: " << _upperRowBound << std::endl;
-	std::cout << "Lower Col Lower Row Bound: " << _lowerColLowerRowBound << std::endl;
-	std::cout << "Lower Col Upper Row Bound: " << _lowerColUpperRowBound << std::endl;
-	std::cout << "Upper Col Lower Row Bound: " << _upperColLowerRowBound << std::endl;
-	std::cout << "Upper Col Upper Row Bound: " << _upperColUpperRowBound << std::endl;
-	*/
 	
 	possibleMoves.erase(
 		std::remove_if(
@@ -244,16 +245,11 @@ void Board::filterPossibleMoves(int _col, int _row)
 				if (_move.x >= _upperColBound && _move.y == _row && _upperColBound != -1) return true;
 				if (_move.x == _col && _move.y <= _lowerRowBound && _lowerRowBound != -1) return true;
 				if (_move.x == _col && _move.y >= _upperRowBound && _upperRowBound != -1) return true;
+				if (_move.x <= _lowerDiagonalUpColBound && _move.y <= _lowerDiagonalLeftRowBound && _lowerDiagonalUpColBound != -1 && _lowerDiagonalLeftRowBound != -1) return true;
+				if (_move.x <= _lowerDiagonalDownColBound && _move.y >= _upperDiagonalLeftRowBound && _lowerDiagonalDownColBound != -1 && _upperDiagonalLeftRowBound != -1) return true;
+				if (_move.x >= _upperDiagonalUpColBound && _move.y <= _lowerDiagonalRightRowBound && _upperDiagonalUpColBound != -1 && _lowerDiagonalRightRowBound != -1) return true;
+				if (_move.x >= _upperDiagonalDownColBound && _move.y >= _upperDiagonalRightRowBound && _upperDiagonalDownColBound != -1 && _upperDiagonalRightRowBound != -1) return true;
 
-				/*if (_move.x < _lowerColLowerRowBound && _move.y < _lowerColLowerRowBound) return true;
-				if (_move.x < _lowerColUpperRowBound && _move.y > _lowerColUpperRowBound) return true;
-				if (_move.x > _upperColLowerRowBound && _move.y < _upperColLowerRowBound) return true;
-				if (_move.x > _upperColUpperRowBound && _move.y > _upperColUpperRowBound) return true;
-				if (_move.x < _lowerColBound && _move.y == _row) return true;
-				if (_move.x > _upperColBound && _move.y == _row) return true;
-				if (_move.x == _col && _move.y < _lowerRowBound) return true;
-				if (_move.x == _col && _move.y > _upperRowBound) return true;*/
-				
 				if (board[_move.x][_move.y])
 				{
 					if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) return true;
