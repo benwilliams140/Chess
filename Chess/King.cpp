@@ -11,7 +11,7 @@ King::~King()
 
 }
 
-std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols)
+std::vector<sf::Vector2i> King::getPossibleMoves(Array2D<Piece*>& _board)
 {
 	std::vector<sf::Vector2i> _moves;
 
@@ -22,7 +22,7 @@ std::vector<sf::Vector2i> King::getPossibleMoves(int _rows, int _cols)
 			int _nextCol = col + _dCol;
 			int _nextRow = row + _dRow;
 
-			if (_nextCol >= 0 && _nextCol < _cols && _nextRow >= 0 && _nextRow < _rows)
+			if (_nextCol >= 0 && _nextCol < _board.getCols() && _nextRow >= 0 && _nextRow < _board.getRows())
 			{
 				if (_nextRow != row || _nextCol != col)
 				{

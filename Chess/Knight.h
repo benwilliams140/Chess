@@ -9,7 +9,7 @@ public:
 	Knight(int, int, int, char);
 	~Knight();
 
-	std::vector<sf::Vector2i> getPossibleMoves(int, int) override;
+	std::vector<sf::Vector2i> getPossibleMoves(Array2D<Piece*>&) override;
 
 private:
 

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Window.h"
+#include "Array2D.h"
 
 class Piece
 {
@@ -18,7 +19,7 @@ public:
 	void reset();
 	void moveTo(int, int);
 
-	virtual std::vector<sf::Vector2i> getPossibleMoves(int, int);
+	virtual std::vector<sf::Vector2i> getPossibleMoves(Array2D<Piece*>&);
 
 	int getRow();
 	int getCol();

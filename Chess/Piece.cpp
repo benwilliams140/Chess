@@ -53,7 +53,7 @@ void Piece::moveTo(int _col, int _row)
 	//std::cout << "After: " << rect.getPosition().x << ", " << rect.getPosition().y << std::endl;
 }
 
-std::vector<sf::Vector2i> Piece::getPossibleMoves(int _rows, int _cols)
+std::vector<sf::Vector2i> Piece::getPossibleMoves(Array2D<Piece*>& _board)
 {
 	std::vector<sf::Vector2i> _moves;
 	return _moves;

@@ -12,15 +12,7 @@ Board::~Board()
 
 void Board::init()
 {
-	// initializes board to NULL
-	for (int _row = 0; _row < ROWS; ++_row)
-	{
-		for (int _col = 0; _col < COLS; ++_col)
-		{
-			if (board[_col][_row]) delete board[_col][_row];
-			board[_col][_row] = NULL;
-		}
-	}
+	board.clear();
 
 	// initializes black/white pawns
 	for (int _col = 0; _col < COLS; ++_col)
@@ -130,7 +122,7 @@ void Board::mouseClicked(sf::Vector2i _position)
 		{
 			selectedPiece = board[_col][_row];
 			selectedPiece->mouseClicked();
-			possibleMoves = selectedPiece->getPossibleMoves(ROWS, COLS);
+			possibleMoves = selectedPiece->getPossibleMoves(board);
 			filterPossibleMoves(_col, _row);
 		}
 	}
