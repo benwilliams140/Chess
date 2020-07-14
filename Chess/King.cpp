@@ -22,12 +22,9 @@ std::vector<sf::Vector2i> King::getPossibleMoves(Array2D<Piece*>& _board)
 			int _nextCol = col + _dCol;
 			int _nextRow = row + _dRow;
 
-			if (_nextCol >= 0 && _nextCol < _board.getCols() && _nextRow >= 0 && _nextRow < _board.getRows())
+			if (_board.inBounds(_nextCol, _nextRow))
 			{
-				if (_board[_nextCol][_nextRow])
-				{
-					if (_board[_nextCol][_nextRow]->getColour() == this->getColour()) continue;
-				}
+				if (_board[_nextCol][_nextRow] && _board[_nextCol][_nextRow]->getColour() == getColour()) continue;
 
 				_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
 			}

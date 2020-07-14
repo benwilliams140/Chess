@@ -9,6 +9,7 @@ public:
 	~Array2D();
 
 	void clear();
+	bool inBounds(int, int);
 	T* operator[](int);
 
 	int getRows();
@@ -52,6 +53,12 @@ void Array2D<T>::clear()
 			arr[_col][_row] = NULL;
 		}
 	}
+}
+
+template <class T>
+bool Array2D<T>::inBounds(int _col, int _row)
+{
+	return _col >= 0 && _col < cols && _row >= 0 && _row < rows;
 }
 
 template <class T>

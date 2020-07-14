@@ -24,8 +24,8 @@ std::vector<sf::Vector2i> Bishop::getPossibleMoves(Array2D<Piece*>& _board)
 		int _rowAbove = row + _dCol;
 		int _rowBelow = row - _dCol;
 
-		if (_rowAbove >= 0 && _rowAbove < _board.getRows()) _moves.push_back(sf::Vector2i(_nextCol, _rowAbove));
-		if (_rowBelow >= 0 && _rowBelow < _board.getRows()) _moves.push_back(sf::Vector2i(_nextCol, _rowBelow));
+		if (_board.inBounds(_nextCol, _rowAbove)) _moves.push_back(sf::Vector2i(_nextCol, _rowAbove));
+		if (_board.inBounds(_nextCol, _rowBelow)) _moves.push_back(sf::Vector2i(_nextCol, _rowBelow));
 	}
 
 	return _moves;

@@ -189,7 +189,7 @@ void Board::filterPossibleMoves(int _col, int _row)
 				int _nextCol = _col + _dCol * _multiple;
 				int _nextRow = _row + _dRow * _multiple;
 
-				if (_nextCol >= 0 && _nextCol < COLS && _nextRow >= 0 && _nextRow < ROWS)
+				if (board.inBounds(_nextCol, _nextRow))
 				{
 					//std::cout << _nextRow << ", " << _nextRow << std::endl << std::endl;
 
