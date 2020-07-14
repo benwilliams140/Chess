@@ -25,6 +25,7 @@ public:
 	int getCol();
 	char getColour();
 	char getPiece();
+	int getMove();
 
 protected:
 	int row, col, size;

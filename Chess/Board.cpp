@@ -98,7 +98,11 @@ void Board::render(Window* _window)
 	{
 		for (int _col = 0; _col < COLS; ++_col)
 		{
-			if (board[_col][_row]) board[_col][_row]->render(_window);
+			if (board[_col][_row])
+			{
+				//std::cout << "Rendering piece at: " << board[_col][_row]->getCol() << ", " << board[_col][_row]->getRow() << "(" << _col << ", " << _row << ")" << std::endl;
+				board[_col][_row]->render(_window);
+			}
 		}
 	}
 }
@@ -123,7 +127,7 @@ void Board::mouseClicked(sf::Vector2i _position)
 			selectedPiece = board[_col][_row];
 			selectedPiece->mouseClicked();
 			possibleMoves = selectedPiece->getPossibleMoves(board);
-			filterPossibleMoves(_col, _row);
+			//filterPossibleMoves(_col, _row);
 		}
 	}
 	else checkPossibleMoves(_col, _row);
@@ -136,24 +140,23 @@ void Board::checkPossibleMoves(int _col, int _row)
 		sf::Vector2i _move = *_it;
 		if (_move.x == _col && _move.y == _row)
 		{
-			if (board[_move.x][_move.y])
+			if (board[_col][_row] && board[_col][_row]->getPiece() == 'K')
 			{
-				if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) break;
-				else
-				{
-					char _piece = board[_col][_row]->getPiece();
-					
-					if (_piece == 'K')
-					{
-						init();
-						break;
-					}
-
-					delete board[_col][_row];
-				}
+				init();
+				break;
 			}
 
-			board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;
+			if (board[_col][_row] && board[_col][_row]->getColour() == selectedPiece->getColour())
+			{
+				Piece* _piece = board[_col][_row];
+				board[selectedPiece->getCol()][selectedPiece->getRow()] = _piece;
+				_piece->moveTo(selectedPiece->getCol(), selectedPiece->getRow());
+			}
+			else
+				board[selectedPiece->getCol()][selectedPiece->getRow()] = NULL;
+
+			//delete board[_col][_row];
+
 			selectedPiece->moveTo(_col, _row);
 			board[_col][_row] = selectedPiece;
 

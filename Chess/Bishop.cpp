@@ -15,6 +15,9 @@ std::vector<sf::Vector2i> Bishop::getPossibleMoves(Array2D<Piece*>& _board)
 {
 	std::vector<sf::Vector2i> _moves;
 
+	int topLeftBound, topRightBound, bottomLeftBound, bottomRightBound;
+	topLeftBound = topRightBound = bottomLeftBound = bottomRightBound = -1;
+
 	for (int _dCol = -col; _dCol < _board.getCols() - col; ++_dCol)
 	{
 		int _nextCol = col + _dCol;

@@ -3,7 +3,7 @@
 /*
 TODO:
 - Fischer Random Chess??
-- Add 2DArray class to handle custom board operations
+- Add function to check if King is in check
 */
 
 Game::Game() : running(false)

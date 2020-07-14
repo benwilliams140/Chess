@@ -24,11 +24,36 @@ std::vector<sf::Vector2i> King::getPossibleMoves(Array2D<Piece*>& _board)
 
 			if (_nextCol >= 0 && _nextCol < _board.getCols() && _nextRow >= 0 && _nextRow < _board.getRows())
 			{
-				if (_nextRow != row || _nextCol != col)
+				if (_board[_nextCol][_nextRow])
 				{
-					_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
+					if (_board[_nextCol][_nextRow]->getColour() == this->getColour()) continue;
 				}
+
+				_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
 			}
+		}
+	}
+
+	if (move == 0)
+	{
+		Piece* _piece;
+
+		if (_board[0][row] && _board[0][row]->getMove() == 0)
+		{
+			_piece = NULL;
+			for (int _col = 1; _col < col; ++_col)
+				if (!_piece) _piece = _board[_col][row];
+
+			if (!_piece) _moves.push_back(sf::Vector2i(0, row));
+		}
+
+		if (_board[_board.getCols() - 1][row] && _board[_board.getCols() - 1][row]->getMove() == 0)
+		{
+			_piece = NULL;
+			for (int _col = col + 1; _col < _board.getCols() - 1; ++_col)
+				if (!_piece) _piece = _board[_col][row];
+
+			if (!_piece) _moves.push_back(sf::Vector2i(_board.getCols() - 1, row));
 		}
 	}
 

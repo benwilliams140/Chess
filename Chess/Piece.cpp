@@ -40,7 +40,6 @@ void Piece::reset()
 void Piece::moveTo(int _col, int _row)
 {
 	//std::cout << "Before: " << rect.getPosition().x << ", " << rect.getPosition().y << std::endl;
-
 	
 	//rect.setPosition(sf::Vector2f(col * size + size / 2, row * size + size / 2));
 	rect.move(sf::Vector2f((_col - col) * size, (_row - row) * size));
@@ -77,4 +76,9 @@ char Piece::getColour()
 char Piece::getPiece()
 {
 	return piece;
+}
+
+int Piece::getMove()
+{
+	return move;
 }
