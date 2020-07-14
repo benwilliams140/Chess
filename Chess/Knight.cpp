@@ -19,12 +19,14 @@ std::vector<sf::Vector2i> Knight::getPossibleMoves(Array2D<Piece*>& _board)
 
 	for (int _i = 0; _i < 4; ++_i)
 	{
-		if (_board.inBounds(col + _dCol, row + _dRow))
+		if (_board.inBounds(col + _dCol, row + _dRow) && (!_board[col + _dCol][row + _dRow] || 
+			(_board[col + _dCol][row + _dRow] && _board[col + _dCol][row + _dRow]->getColour() != getColour())))
 		{
 			_moves.push_back(sf::Vector2i(col + _dCol, row + _dRow));
 		}
 
-		if (_board.inBounds(col + _dRow, row + _dCol))
+		if (_board.inBounds(col + _dRow, row + _dCol) && (!_board[col + _dRow][row + _dCol] ||
+			(_board[col + _dRow][row + _dCol] && _board[col + _dRow][row + _dCol]->getColour() != getColour())))
 		{
 			_moves.push_back(sf::Vector2i(col + _dRow, row + _dCol));
 		}
