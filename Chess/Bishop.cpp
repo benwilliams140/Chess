@@ -31,19 +31,40 @@ std::vector<sf::Vector2i> Bishop::getPossibleMoves(Array2D<Piece*>& _board)
 		{
 			int _colMultiple = (int)cos(_rad * M_PI);
 			int _rowMultiple = -(int)cos(floor((_rad - 1) / 2) * M_PI);
-			
-			//std::cout << _colMultiple << ", " << _rowMultiple << std::endl;
+
+			int _nullColBounds = _colMultiple < 0 ? -1 : _board.getCols();
+			int _nullRowBounds = _rowMultiple < 0 ? -1 : _board.getRows();
+
+			int _colIndex = (_rad - 1) * 2;
+			int _rowIndex = _rad * 2 - 1;
+
+			int _nextCol = col + _delta * _colMultiple;
+			int _nextRow = row + _delta * _rowMultiple;
+
+			//std::cout << _colMultiple << ", " << _rowMultiple << " | " << _nullColBounds << ", " << _nullRowBounds << " | " << _colIndex << ", " << _rowIndex << " | " << _nextCol << ", " << _nextRow << std::endl;
+
+			if (_board.inBounds(_nextCol, _nextRow))
+			{
+				if (_board[_nextCol][_nextRow])
+				{
+					if (_bounds[_colIndex] == _nullColBounds)
+						_bounds[_colIndex] = _nextCol;
+
+					if (_bounds[_rowIndex] == _nullRowBounds)
+						_bounds[_rowIndex] = _nextRow;
+
+					if (_board[_nextCol][_nextRow]->getColour() == getColour())
+					{
+						_bounds[_colIndex] -= _colMultiple;
+						_bounds[_rowIndex] -= _rowMultiple;
+					}
+				}
+
+				if (((_colMultiple < 0 && _nextCol >= _bounds[_colIndex]) || (_colMultiple > 0 && _nextCol <= _bounds[_colIndex])) &&
+					((_rowMultiple < 0 && _nextRow >= _bounds[_rowIndex]) || (_rowMultiple > 0 && _nextRow <= _bounds[_rowIndex])))
+					_moves.push_back(sf::Vector2i(_nextCol, _nextRow));
+			}
 		}
-	}
-
-	for (int _dCol = -col; _dCol < _board.getCols() - col; ++_dCol)
-	{
-		int _nextCol = col + _dCol;
-		int _rowAbove = row + _dCol;
-		int _rowBelow = row - _dCol;
-
-		if (_board.inBounds(_nextCol, _rowAbove)) _moves.push_back(sf::Vector2i(_nextCol, _rowAbove));
-		if (_board.inBounds(_nextCol, _rowBelow)) _moves.push_back(sf::Vector2i(_nextCol, _rowBelow));
 	}
 
 	return _moves;
