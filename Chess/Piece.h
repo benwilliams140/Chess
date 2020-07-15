@@ -1,9 +1,12 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#define _USE_MATH_DEFINES
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "Window.h"
 #include "Array2D.h"

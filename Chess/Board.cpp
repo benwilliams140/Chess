@@ -127,7 +127,6 @@ void Board::mouseClicked(sf::Vector2i _position)
 			selectedPiece = board[_col][_row];
 			selectedPiece->mouseClicked();
 			possibleMoves = selectedPiece->getPossibleMoves(board);
-			//filterPossibleMoves(_col, _row);
 		}
 	}
 	else checkPossibleMoves(_col, _row);
@@ -168,94 +167,6 @@ void Board::checkPossibleMoves(int _col, int _row)
 
 	selectedPiece = NULL;
 	possibleMoves.clear();
-}
-
-void Board::filterPossibleMoves(int _col, int _row)
-{
-	int _multipleBound = _col > _row ? _col : _row;
-	int _lowerRowBound = -1, _upperRowBound = -1;
-	int _lowerColBound = -1, _upperColBound = -1;
-	int _lowerDiagonalLeftRowBound = -1, _lowerDiagonalRightRowBound = -1;
-	int _upperDiagonalLeftRowBound = -1, _upperDiagonalRightRowBound = -1;
-	int _lowerDiagonalUpColBound = -1, _lowerDiagonalDownColBound = -1;
-	int _upperDiagonalUpColBound = -1, _upperDiagonalDownColBound = -1;
-	
-	for (int _multiple = 1; _multiple < 8; ++_multiple)
-	{
-		for (int _dCol = -1; _dCol <= 1; ++_dCol)
-		{
-			for (int _dRow = -1; _dRow <= 1; ++_dRow)
-			{
-				int _nextCol = _col + _dCol * _multiple;
-				int _nextRow = _row + _dRow * _multiple;
-
-				if (board.inBounds(_nextCol, _nextRow))
-				{
-					//std::cout << _nextRow << ", " << _nextRow << std::endl << std::endl;
-
-					if (board[_nextCol][_nextRow])
-					{
-						// column bounds
-						if (_nextCol < _col && _nextRow == _row && _lowerColBound == -1) _lowerColBound = _nextCol - 1;
-						if (_nextCol > _col&& _nextRow == _row && _upperColBound == -1) _upperColBound = _nextCol + 1;
-
-						// row bounds
-						if (_nextCol == _col && _nextRow < _row && _lowerRowBound == -1) _lowerRowBound = _nextRow - 1;
-						if (_nextCol == _col && _nextRow > _row && _upperRowBound == -1) _upperRowBound = _nextRow + 1;
-						
-						// diagonal bounds
-						if (_nextCol < _col && _nextRow < _row && _lowerDiagonalUpColBound == -1 && _lowerDiagonalLeftRowBound == -1)
-						{
-							_lowerDiagonalUpColBound = _nextCol - 1;
-							_lowerDiagonalLeftRowBound = _nextRow - 1;
-						}
-						if (_nextCol < _col && _nextRow > _row&& _lowerDiagonalDownColBound == -1 && _upperDiagonalLeftRowBound == -1)
-						{
-							_lowerDiagonalDownColBound = _nextCol - 1;
-							_upperDiagonalLeftRowBound = _nextRow + 1;
-						}
-						if (_nextCol > _col && _nextRow < _row && _upperDiagonalUpColBound == -1 && _lowerDiagonalRightRowBound == -1)
-						{
-							_upperDiagonalUpColBound = _nextCol + 1;
-							_lowerDiagonalRightRowBound = _nextRow - 1;
-						}
-						if (_nextCol > _col&& _nextRow > _row&& _upperDiagonalDownColBound == -1 && _upperDiagonalRightRowBound == -1)
-						{
-							_upperDiagonalDownColBound = _nextCol + 1;
-							_upperDiagonalRightRowBound = _nextRow + 1;
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	possibleMoves.erase(
-		std::remove_if(
-			possibleMoves.begin(),
-			possibleMoves.end(),
-			[&](sf::Vector2i _move) -> bool
-			{
-				if (_move.x <= _lowerColBound && _move.y == _row && _lowerColBound != -1) return true;
-				if (_move.x >= _upperColBound && _move.y == _row && _upperColBound != -1) return true;
-				if (_move.x == _col && _move.y <= _lowerRowBound && _lowerRowBound != -1) return true;
-				if (_move.x == _col && _move.y >= _upperRowBound && _upperRowBound != -1) return true;
-				if (_move.x <= _lowerDiagonalUpColBound && _move.y <= _lowerDiagonalLeftRowBound && _lowerDiagonalUpColBound != -1 && _lowerDiagonalLeftRowBound != -1) return true;
-				if (_move.x <= _lowerDiagonalDownColBound && _move.y >= _upperDiagonalLeftRowBound && _lowerDiagonalDownColBound != -1 && _upperDiagonalLeftRowBound != -1) return true;
-				if (_move.x >= _upperDiagonalUpColBound && _move.y <= _lowerDiagonalRightRowBound && _upperDiagonalUpColBound != -1 && _lowerDiagonalRightRowBound != -1) return true;
-				if (_move.x >= _upperDiagonalDownColBound && _move.y >= _upperDiagonalRightRowBound && _upperDiagonalDownColBound != -1 && _upperDiagonalRightRowBound != -1) return true;
-
-				if (_move.x >= 0 && _move.x < COLS && _move.y >= 0 && _move.y < ROWS)
-				{
-					if (board[_move.x][_move.y])
-						if (board[_move.x][_move.y]->getColour() == selectedPiece->getColour()) return true;
-				}
-
-				return false;
-			}
-		),
-		possibleMoves.end()
-	);
 }
 
 void Board::resetBoard()

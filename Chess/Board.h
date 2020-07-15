@@ -40,7 +40,6 @@ public:
 
 private:
 	void checkPossibleMoves(int, int);
-	void filterPossibleMoves(int, int);
 
 	Array2D<Piece*> board = Array2D<Piece*>(COLS, ROWS);
 	Piece* selectedPiece;

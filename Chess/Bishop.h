@@ -1,10 +1,7 @@
 #ifndef BISHOP_H
 #define BISHOP_H
 
-#define _USE_MATH_DEFINES
-
 #include "Piece.h"
-#include <cmath>
 
 class Bishop : public Piece
 {
